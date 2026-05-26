@@ -5,9 +5,9 @@
       "links": [
         { "label": "Home", "url": "/" },
         { "label": "Geode", "url": "/geode/index" },
-        { "label": "Reverse Engineering", "url": "/reversing" },
-        { "label": "Servers", "url": "/servers" },
-        { "label": "Miscellaneous", "url": "/misc" }
+        { "label": "Reverse Engineering", "url": "/reversing/index" },
+        { "label": "Servers", "url": "/servers/index" },
+        { "label": "Miscellaneous", "url": "/misc/index" }
       ]
     },
     {

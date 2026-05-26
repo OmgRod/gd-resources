@@ -11,6 +11,7 @@
       "title": "Official Guides",
       "collapsible": true,
       "items": [
+        { "title": "Table of Contents", "path": "/guides/index" }
       ]
     },
     {
@@ -25,21 +26,21 @@
       "title": "Reverse Engineering",
       "collapsible": true,
       "items": [
-        { "title": "Home", "path": "/" }
+        { "title": "Table of Contents", "path": "/reversing/index" }
       ]
     },
     {
       "title": "GD Servers",
       "collapsible": true,
       "items": [
-        { "title": "Home", "path": "/" }
+        { "title": "Table of Contents", "path": "/servers/index" }
       ]
     },
     {
       "title": "Miscellaneous",
       "collapsible": true,
       "items": [
-        { "title": "Home", "path": "/" }
+        { "title": "Table of Contents", "path": "/misc/index" }
       ]
     }
   ]

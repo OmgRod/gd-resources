@@ -26,23 +26,23 @@
   "dependencies": {
     "flexsearch": "^0.8.212",
     "gray-matter": "^4.0.3",
-    "katex": "^0.16.25",
-    "lucide-react": "^1.6.0",
-    "next": "^16.2.1",
+    "katex": "^0.17.0",
+    "lucide-react": "^1.16.0",
+    "next": "^16.2.6",
     "next-mdx-remote": "^6.0.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.16",
-    "@types/react": "^19.2.2",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/react": "^19.2.15",
     "@tailwindcss/typography": "^0.5.19",
-    "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
     "prism-react-renderer": "^2.4.1",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.3.0"
   }
 }
