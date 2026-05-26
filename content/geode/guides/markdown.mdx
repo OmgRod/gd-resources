@@ -1,9 +1,134 @@
 ---
 title: Markdown Formatting in Geode
-description: Add mods, levels, users, and even more colourful text in Geode Markdown textboxes
+description: Add mods, levels, users, and other rich formatting to Geode Markdown textboxes
 editPage: true
 ---
 
 # Markdown Formatting in Geode
 
-*tbd*
+Geode includes several classes for rendering Markdown in Geometry Dash:
+
+- `MDPopup`
+- `MDTextArea`
+
+These classes allow you to display formatted Markdown text inside GD.
+
+In addition to standard Markdown formatting, Geode also supports several custom tags and integrations.
+
+## Displaying Mods
+
+To display a mod neatly in Markdown (for example in `about.md`), use the following syntax:
+
+```markdown
+<mod:geode.node-ids>
+```
+
+Replace `geode.node-ids` with any valid mod ID.
+
+The mod will then be rendered as a row like this:
+
+<Image
+    src="/assets/markdown-modrow.png"
+    alt="Example of a rendered mod row in about.md"
+/>
+
+## Linking Users
+
+To create a clickable link to a user's profile, use the following syntax:
+
+```markdown
+[OmgRod](<user:17369066>)
+```
+
+Replace:
+
+- `OmgRod` with the text you want displayed
+- `17369066` with the user's **account ID**
+
+<Alert type="info" title="Note:">
+    This uses the user's **account ID**, not their user ID.
+</Alert>
+
+You can find a user's account ID by:
+
+- Viewing their profile on <Link href="https://gdbrowser.com">GDBrowser</Link>
+- Using the <Link href="https://geode-sdk.org/mods/cvolton.betterinfo">BetterInfo</Link> mod in-game
+
+The link will look like this in Markdown:
+
+<Image
+    src="/assets/markdown-userinabout.png"
+    alt="Example of a user link in about.md"
+/>
+
+When clicked, it opens the user's profile popup:
+
+<Image
+    src="/assets/markdown-user.png"
+    alt="Example of the in-game user popup"
+/>
+
+## Linking Levels
+
+To create a clickable link to a level, use the following syntax:
+
+```markdown
+[Bloodbath](<level:10565740>)
+```
+
+Replace:
+
+- `Bloodbath` with the text you want displayed
+- `10565740` with the level ID
+
+<Alert type="info" title="Note:">
+    This uses the level ID shown in Geometry Dash and on sites such as GDBrowser.
+</Alert>
+
+You can find a level's ID by:
+
+- Viewing the level in-game
+- Opening the level page on <Link href="https://gdbrowser.com">GDBrowser</Link>
+
+The link will look like this in Markdown:
+
+<Image
+    src="/assets/markdown-lvlinabout.png"
+    alt="Example of a level link in about.md"
+/>
+
+When clicked, it opens the level popup:
+
+<Image
+    src="/assets/markdown-level.png"
+    alt="Example of the in-game level popup"
+/>
+
+## Supported Custom Tags
+
+<Table>
+    <THead>
+        <TR>
+            <TH>Feature</TH>
+            <TH>Syntax</TH>
+            <TH>Example</TH>
+        </TR>
+    </THead>
+    <TBody>
+        <TR>
+            <TH>Mod Display</TH>
+            <TH>`<mod:mod.id>`</TH>
+            <TH>`<mod:geode.node-ids>`</TH>
+        </TR>
+        <TR>
+            <TH>User Link</TH>
+            <TH>`<user:accountid>`</TH>
+            <TH>`[OmgRod](<user:17369066>)`</TH>
+        </TR>
+        <TR>
+            <TH>Level Link</TH>
+            <TH>`<level:levelid>`</TH>
+            <TH>`[Bloodbath](<level:10565740>)`</TH>
+        </TR>
+    </TBody>
+</Table>

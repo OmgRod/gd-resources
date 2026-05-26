@@ -22,6 +22,7 @@ import Sidebar from './Sidebar';
 import Steps from './Steps';
 import Tabs, { Tab, TabPanels } from './Tabs';
 import GuidesTable from './GuidesTable';
+import Image from './Image';
 import Table, { Caption, TBody, TD, TH, THead, TR } from './WikiTable';
 import {
   AreaChart,
@@ -63,6 +64,7 @@ const mdxComponents = {
   Header,
   HeatmapChart,
   Icon,
+  Image,
   Infobox,
   Kbd,
   Link,
@@ -81,6 +83,7 @@ const mdxComponents = {
   Steps,
   UnitConverter,
   Table,
+  img: Image,
   TBody,
   TD,
   TH,
