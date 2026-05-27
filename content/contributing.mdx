@@ -11,7 +11,7 @@ Before you contribute to GD Resources, there are a few things you should know:
 
 <Steps>
     <Step>
-        We use GitHub to host this website's code, so you should <Link href="https://github.com/signup">create an account</Link>.
+        We use GitHub to host this website's code, so you should <Link href="https://github.com/signup">create an account</Link> if you haven't yet.
     </Step>
     <Step>
         Add yourself as an author in `content/authors.json`, like this:
@@ -91,3 +91,27 @@ editPage: true
 ```
 
 Sub-categories are **optional**. If no sub-categories are present, remove the two subtitles and the `GuidesTable` in between.
+
+## Creating Guides
+
+You can create a guide using the following template:
+
+```mdx
+---
+title: [GUIDE TITLE]
+description: [GUIDE DESCRIPTION]
+author: [YOUR USERNAME]
+editPage: true
+---
+
+# [GUIDE TITLE]
+
+ADD YOUR STUFF HERE
+```
+
+It is important that:
+
+1. The guide title is the exact same in both fields.
+2. You keep the description relatively short (1-2 sentences max).
+3. Your username is the exact same as the one you put in `authors.json`.
+4. `editPage` is ALWAYS TRUE!
