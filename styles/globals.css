@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+:root {
+  --theme-transition-duration: 300ms;
+  --theme-transition-timing: cubic-bezier(.2,.8,.2,1);
+}
+
+html, html * {
+  transition-property: background-color, color, border-color, fill, stroke, box-shadow, opacity, transform, filter !important;
+  transition-duration: var(--theme-transition-duration) !important;
+  transition-timing-function: var(--theme-transition-timing) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html, html * {
+    transition: none !important;
+  }
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 html,
