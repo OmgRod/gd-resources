@@ -104,6 +104,29 @@ When clicked, it opens the level popup:
     alt="Example of the in-game level popup"
 />
 
+## Hex Color Tags
+
+As you may know, Geometry Dash already has support in *some* places for color tags, but they are very limited in what colors you can have. Because of this, Geode now allows you to use hex color tags, which have the following syntax:
+
+```markdown
+    <c-2f7fe0>Hello, world!</c>
+```
+
+You may replace `Hello, world!` with any of your own text, and `2f7fe0` with any hex code you want.
+
+Additionally, by combining these color tags, you can create cool gradients, like in BetterEdit's `about.md`:
+
+```markdown
+    <c-11f917>B</c><c-12f534>e</c><c-13f348>t</c><c-14f155>t</c><c-14ef67>e</c><c-15ed76>r</c>Edit
+```
+
+In the `about.md`, this text looks like this:
+
+<Image
+    src="/assets/markdown-betteredit.png"
+    alt="BetterEdit text with a green gradient"
+/>
+
 ## Supported Custom Tags
 
 <Table>
@@ -129,6 +152,11 @@ When clicked, it opens the level popup:
             <TH>Level Link</TH>
             <TH>`<level:levelid>`</TH>
             <TH>`[Bloodbath](<level:10565740>)`</TH>
+        </TR>
+        <TR>
+            <TH>Hex Color Tags</TH>
+            <TH>`<c-hexcode>text</c>`</TH>
+            <TH>`<c-2f7fe0>Hello, world!</c>`</TH>
         </TR>
     </TBody>
 </Table>
