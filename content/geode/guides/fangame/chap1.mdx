@@ -239,6 +239,59 @@ $modify(MyLevelTools, LevelTools) {
 };
 ```
 
+## Adding the songs
+
+You may add the songs in your mod by updating the `mod.json`:
+
+```json
+{
+    ...
+    "resources": {
+        "files": [
+            "res/levels/*.txt",
+            "res/music.zip"
+        ]
+    }
+}
+```
+
+Inside the music.zip should be every song in your mod (if you want to learn how to zip files, google it 😊).
+
+### Unzipping the songs
+
+To unzip the songs, write the following code (straight from GD Surge):
+
+```cpp
+#include <Geode/Geode.hpp>
+#include <Geode/utils/file.hpp>
+
+using namespace geode::prelude;
+
+$on_mod(Loaded) {
+    auto musicPath = Mod::get()->getResourcesDir() / "music.zip";
+    auto unzip = geode::utils::file::Unzip::create(musicPath);
+    if (unzip.isErr()) {
+        FLAlertLayer::create(
+            "Error",
+            "Failed to unzip music files.",
+            "OK"
+        )->show();
+        return;
+    }
+
+    auto& archive = unzip.unwrap();
+    auto success = archive.extractAllTo(Mod::get()->getSaveDir());
+    if (!success.isOk()) {
+        FLAlertLayer::create(
+            "Error",
+            "Failed to unzip music files.",
+            "OK"
+        )->show();
+        return;
+    }
+}
+```
+
 ## Making levels playable
 
 If you attempt to open a level in your mod's current state, it may say "Failed to load" when you open the level. To fix this, you need to hook `LevelTools` again and ensure each time the game checks the level's integrity, it returns `true`:
