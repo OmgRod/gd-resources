@@ -133,7 +133,31 @@ export default function GuidesTable({ guides: initialGuides = [], subdirectory, 
 
   const results = useMemo(() => {
     const q = String(query || '').trim();
-    if (!q) return normalized.map((item) => ({ guide: item, titlePositions: [], descPositions: [], score: 0 }));
+
+    const sortGuides = (aGuide, bGuide) => {
+      const valA = aGuide.order ?? aGuide.metadata?.order ?? aGuide.meta?.order;
+      const valB = bGuide.order ?? bGuide.metadata?.order ?? bGuide.meta?.order;
+
+      const hasOrderA = valA !== undefined && valA !== null;
+      const hasOrderB = valB !== undefined && valB !== null;
+
+      if (hasOrderA && !hasOrderB) return -1;
+      if (!hasOrderA && hasOrderB) return 1;
+      if (hasOrderA && hasOrderB) {
+        const numA = Number(valA);
+        const numB = Number(valB);
+        if (!isNaN(numA) && !isNaN(numB) && numA !== numB) {
+          return numA - numB;
+        }
+      }
+      return String(aGuide.title || '').localeCompare(String(bGuide.title || ''));
+    };
+
+    if (!q) {
+      return [...normalized]
+        .sort(sortGuides)
+        .map((item) => ({ guide: item, titlePositions: [], descPositions: [], score: 0 }));
+    }
 
     return normalized
       .map((item) => {
@@ -151,7 +175,10 @@ export default function GuidesTable({ guides: initialGuides = [], subdirectory, 
         };
       })
       .filter((r) => r.score > 0)
-      .sort((a, b) => b.score - a.score);
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return sortGuides(a.guide, b.guide);
+      });
   }, [normalized, query]);
 
   if (!resolvedGuides.length) {

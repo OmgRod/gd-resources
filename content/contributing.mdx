@@ -9,30 +9,6 @@ editPage: true
 
 Before you contribute to GD Resources, there are a few things you should know:
 
-<Steps>
-    <Step>
-        We use GitHub to host this website's code, so you should <Link href="https://github.com/signup">create an account</Link> if you haven't yet.
-    </Step>
-    <Step>
-        Add yourself as an author in `content/authors.json`, like this:
-        ```json
-        {
-            "YourUsername": {
-                "name": "YourUsername",
-                "avatar": "YourAvatarUrl", // you can upload your own avatar to `public/assets/avatars`
-                "url": "YourPortfolioOrProfile.com"
-            }
-        }
-        ```
-    </Step>
-    <Step>
-        If you are creating a new category/subcategory, ensure it contains **at least** the following files:
-        
-        1. `index.mdx`
-        2. `guides/index.mdx`
-    </Step>
-</Steps>
-
 ## How to setup GD Resources?
 
 ### Prerequisites
@@ -86,6 +62,32 @@ However, GD Resources also has a few new components that aren't present in MiniW
 - <Link href="https://github.com/OmgRod/gd-resources/blob/main/components/TwemojiProvider.js">TwemojiProvider</Link>
 - <Link href="https://github.com/OmgRod/gd-resources/blob/main/components/YouTube.js">YouTube</Link>
 - <Link href="https://github.com/OmgRod/gd-resources/blob/main/components/mdx-components.js#L42C1-L42C30">Link</Link> (literally just `next/link`)
+
+## How to give yourself credit?
+
+<Steps>
+    <Step>
+        We use GitHub to host this website's code, so you should <Link href="https://github.com/signup">create an account</Link> if you haven't yet.
+    </Step>
+    <Step>
+        Add yourself as an author in `content/authors.json`, like this:
+        ```json
+        {
+            "YourUsername": {
+                "name": "YourUsername",
+                "avatar": "YourAvatarUrl", // you can upload your own avatar to `public/assets/avatars`
+                "url": "YourPortfolioOrProfile.com"
+            }
+        }
+        ```
+    </Step>
+    <Step>
+        If you are creating a new category/subcategory, ensure it contains **at least** the following files:
+        
+        1. `index.mdx`
+        2. `guides/index.mdx`
+    </Step>
+</Steps>
 
 ## Category file templates
 
@@ -156,6 +158,7 @@ title: [GUIDE TITLE]
 description: [GUIDE DESCRIPTION]
 author: [YOUR USERNAME]
 editPage: true
+order: ORDER_NUMBER
 ---
 
 # [GUIDE TITLE]
@@ -169,6 +172,7 @@ It is important that:
 2. You keep the description relatively short (1-2 sentences max). But keep it descriptive enough as this will appear in `category/guides/index.mdx`.
 3. Your username is the exact same as the one you put in `authors.json`.
 4. `editPage` is ALWAYS TRUE!
+5. `ORDER_NUMBER` must be a number. The higher the number, the further down it appears. It is completely optional and only recommended for subcategory guides.
 
 Also, whenever you create a guide, you must add it to `sidebar.json`, like this:
 
