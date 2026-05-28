@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Lightweight and customizable Next.js + MDX wiki template",
   "private": true,
-  "packageManager": "yarn@1.22.22",
   "scripts": {
     "predev": "node scripts/generate-seo-files.js",
     "prestart": "node scripts/generate-seo-files.js",
