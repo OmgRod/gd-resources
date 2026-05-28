@@ -1,0 +1,57 @@
+name: Tool / Resource Request
+description: Propose a new tool or resource to be added to GD Resources
+title: "[Resource]: "
+labels: ["resource-request", "enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new tool or resource.
+        Please provide the details below so we can properly evaluate and attribute it.
+
+  - type: textarea
+    id: tool_name
+    attributes:
+      label: Tool / Resource Name
+      description: What is the name of the tool or resource?
+      placeholder: e.g. GD Save Editor, Level Parser, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: tool_link
+    attributes:
+      label: Tool Link
+      description: Provide a direct link to the tool/resource.
+      placeholder: https://...
+    validations:
+      required: true
+
+  - type: textarea
+    id: developer_name
+    attributes:
+      label: Developer Name (Preferred Credit)
+      description: Enter the username or real name of the developer you want credited.
+      placeholder: e.g. OmgRod / RobTop / etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: developer_link
+    attributes:
+      label: Developer Link
+      description: Link to the developer's profile, website, or repository.
+      placeholder: https://...
+    validations:
+      required: true
+
+  - type: textarea
+    id: short_description
+    attributes:
+      label: Short Description
+      description: Briefly describe what the tool does (max 2 sentences).
+      placeholder: This tool allows users to...
+    validations:
+      required: true

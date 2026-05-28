@@ -214,7 +214,7 @@ export default function WikiPage({
   pageNavigation,
   subdirectoryGuides,
 }) {
-  const titleSuffix = siteConfig?.titleSuffix || siteConfig?.siteName || 'MiniWiki';
+  const titleSuffix = siteConfig?.titleSuffix || siteConfig?.siteName || 'GD Resources';
   const fallbackDescription = siteConfig?.siteDescription || '';
   const faviconPath = normalizeAssetPath(siteConfig?.faviconPath || '/favicon.ico');
   const Template = resolveTemplate(template);

@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug to help us improve MiniWiki
+description: Report a bug to help us improve GD Resources
 title: "[Bug]: "
 labels: ["bug"]
 assignees: []
@@ -55,11 +55,10 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Include OS, browser, app/version, and any relevant setup details
+      description: Include OS, browser, and any relevant setup details
       placeholder: |
         OS: Windows 11
         Browser: Chrome 134
-        MiniWiki version/commit: ...
     validations:
       required: true
 

@@ -51,6 +51,7 @@ const ICON_ALIASES = {
   menu: 'Menu',
   note: 'NotebookPen',
   notification: 'Bell',
+  megaphone: 'Megaphone',
   pencil: 'Pencil',
   phone: 'Phone',
   plus: 'Plus',

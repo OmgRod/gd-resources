@@ -9,7 +9,7 @@ function isExternal(path = '') {
 
 export default function Header({ headerConfig, searchDocuments, siteConfig }) {
   const links = headerConfig?.links || [];
-  const siteName = siteConfig?.siteName || 'MiniWiki';
+  const siteName = siteConfig?.siteName || 'GD Resources';
   const branding = siteConfig?.branding || {};
   const logoPath = typeof branding.logoPath === 'string' ? branding.logoPath.trim() : '';
   const resolvedLogoPath = normalizeAssetPath(logoPath);

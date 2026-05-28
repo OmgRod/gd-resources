@@ -61,7 +61,7 @@ export default function Footer({ siteConfig, footerConfig }) {
   const copyrightText =
     footerConfig?.copyright ||
     siteConfig?.footer?.text ||
-    'MiniWiki Documentation · Built with MiniWiki';
+    '';
   const copyright = resolveCopyright(copyrightText);
   const tagLine = footerConfig?.tagLine || '';
 
