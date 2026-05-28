@@ -42,14 +42,14 @@ export default function DarkModeToggle() {
     >
       <span className="relative h-5 w-5">
         <Icon
-          name="sun"
+          name="Sun"
           size={18}
           className={`absolute inset-0 transition-all duration-300 ease-out ${
             theme === 'dark' ? 'scale-0 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'
           }`}
         />
         <Icon
-          name="moon"
+          name="Moon"
           size={18}
           className={`absolute inset-0 transition-all duration-300 ease-out ${
             theme === 'dark' ? 'scale-100 rotate-0 opacity-100' : 'scale-0 -rotate-90 opacity-0'

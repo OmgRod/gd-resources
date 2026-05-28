@@ -1,11 +1,11 @@
 {
   "links": [
-    { "title": "Home", "path": "/", "icon": "home" },
-    { "title": "Official Guides", "path": "/guides", "icon": "book" },
-    { "title": "Contributing", "path": "/contributing", "icon": "wrench" },
-    { "title": "Credits", "path": "/credits", "icon": "sparkles" }
+    { "title": "Home", "path": "/", "icon": "Home" },
+    { "title": "Official Guides", "path": "/guides", "icon": "Book" },
+    { "title": "Contributing", "path": "/contributing", "icon": "Wrench" },
+    { "title": "Credits", "path": "/credits", "icon": "Sparkles" }
   ],
   "rightLinks": [
-    { "title": "GitHub", "path": "https://github.com/OmgRod/gd-resources", "icon": "github" }
+    { "title": "GitHub", "path": "https://github.com/OmgRod/gd-resources", "icon": "SiGitHub" }
   ]
 }

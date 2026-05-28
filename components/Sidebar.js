@@ -110,7 +110,7 @@ function SidebarGroup({ item, currentPath, depth }) {
         <span>{item.title}</span>
         {collapsible ? (
           <Icon
-            name="chevrondown"
+            name="ChevronDown"
             size={14}
             className={`transition-transform duration-200 ${isOpen ? 'rotate-0' : '-rotate-90'}`}
           />
@@ -151,7 +151,7 @@ function SidebarSection({ section, currentPath }) {
         <span>{section.title}</span>
         {collapsible ? (
           <Icon
-            name="chevrondown"
+            name="ChevronDown"
             size={14}
             className={`transition-transform duration-200 ${isOpen ? 'rotate-0' : '-rotate-90'}`}
           />

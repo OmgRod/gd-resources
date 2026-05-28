@@ -1,83 +1,5 @@
 import * as LucideIcons from 'lucide-react';
-
-const ICON_ALIASES = {
-  alert: 'AlertCircle',
-  archive: 'Archive',
-  arrowdown: 'ArrowDown',
-  arrowleft: 'ArrowLeft',
-  arrowright: 'ArrowRight',
-  arrowup: 'ArrowUp',
-  bell: 'Bell',
-  book: 'Book',
-  bookmark: 'Bookmark',
-  calendar: 'Calendar',
-  camera: 'Camera',
-  chat: 'MessageCircle',
-  check: 'CheckCircle2',
-  chevrondown: 'ChevronDown',
-  chevronleft: 'ChevronLeft',
-  chevronright: 'ChevronRight',
-  chevronup: 'ChevronUp',
-  clock: 'Clock3',
-  close: 'X',
-  code: 'Code2',
-  copy: 'Copy',
-  dashboard: 'LayoutDashboard',
-  danger: 'TriangleAlert',
-  delete: 'Trash2',
-  docs: 'FileCode2',
-  download: 'Download',
-  edit: 'Pencil',
-  email: 'Mail',
-  error: 'XCircle',
-  external: 'ExternalLink',
-  file: 'File',
-  folder: 'Folder',
-  gear: 'Settings2',
-  git: 'FolderGit2',
-  github: 'Github',
-  globe: 'Globe',
-  hammer: 'Hammer',
-  heart: 'Heart',
-  help: 'CircleHelp',
-  home: 'Home',
-  image: 'Image',
-  info: 'Info',
-  idea: 'Lightbulb',
-  layers: 'Layers3',
-  link: 'Link',
-  linkedin: 'Linkedin',
-  lock: 'Lock',
-  menu: 'Menu',
-  note: 'NotebookPen',
-  notification: 'Bell',
-  megaphone: 'Megaphone',
-  pencil: 'Pencil',
-  phone: 'Phone',
-  plus: 'Plus',
-  question: 'CircleHelp',
-  rocket: 'Rocket',
-  search: 'Search',
-  security: 'ShieldCheck',
-  settings: 'Settings2',
-  sparkles: 'Sparkles',
-  star: 'Star',
-  success: 'CheckCircle2',
-  tag: 'Tag',
-  terminal: 'Terminal',
-  template: 'LayoutTemplate',
-  tool: 'Wrench',
-  trash: 'Trash2',
-  twitter: 'Twitter',
-  upload: 'Upload',
-  user: 'User',
-  users: 'Users',
-  video: 'Video',
-  warning: 'TriangleAlert',
-  wrench: 'Wrench',
-  x: 'X',
-  youtube: 'Youtube',
-};
+import * as SimpleIcons from '@icons-pack/react-simple-icons';
 
 function toPascalCase(value = '') {
   return String(value)
@@ -93,44 +15,63 @@ function isIconComponent(value) {
   return (typeof value === 'function' || typeof value === 'object') && value !== null;
 }
 
+function resolveSimpleIconName(rawName) {
+  const normalized = rawName.replace(/^si[-_]?/i, '');
+  const pascalName = toPascalCase(normalized);
+  const withPrefix = `Si${pascalName}`;
+
+  if (isIconComponent(SimpleIcons[rawName])) {
+    return rawName;
+  }
+
+  if (isIconComponent(SimpleIcons[pascalName])) {
+    return pascalName;
+  }
+
+  if (isIconComponent(SimpleIcons[withPrefix])) {
+    return withPrefix;
+  }
+
+  return null;
+}
+
 function resolveIcon(name = 'info') {
   const rawName = String(name || '').trim();
-  const lowerName = rawName.toLowerCase();
-
-  if (lowerName === 'github') {
-    if (isIconComponent(LucideIcons.GitHub)) return LucideIcons.GitHub;
-    if (isIconComponent(LucideIcons.Github)) return LucideIcons.Github;
-  }
-  if (lowerName === 'youtube') {
-    if (isIconComponent(LucideIcons.YouTube)) return LucideIcons.YouTube;
-    if (isIconComponent(LucideIcons.Youtube)) return LucideIcons.Youtube;
-  }
-  if (lowerName === 'linkedin') {
-    if (isIconComponent(LucideIcons.LinkedIn)) return LucideIcons.LinkedIn;
-    if (isIconComponent(LucideIcons.Linkedin)) return LucideIcons.Linkedin;
-  }
-
-  const aliasName = ICON_ALIASES[lowerName];
-  if (aliasName && isIconComponent(LucideIcons[aliasName])) {
-    return LucideIcons[aliasName];
-  }
+  const pascalName = toPascalCase(rawName);
 
   if (isIconComponent(LucideIcons[rawName])) {
     return LucideIcons[rawName];
   }
 
-  const pascalName = toPascalCase(rawName);
   if (isIconComponent(LucideIcons[pascalName])) {
     return LucideIcons[pascalName];
   }
 
-  return LucideIcons.Info;
+  if (isIconComponent(SimpleIcons[rawName])) {
+    return SimpleIcons[rawName];
+  }
+
+  if (isIconComponent(SimpleIcons[pascalName])) {
+    return SimpleIcons[pascalName];
+  }
+
+  const simpleIconAlias = resolveSimpleIconName(rawName);
+  if (simpleIconAlias && isIconComponent(SimpleIcons[simpleIconAlias])) {
+    return SimpleIcons[simpleIconAlias];
+  }
+
+  return null;
 }
 
 const LOCAL_ICONS = ['github'];
 
 export default function Icon({ name = 'info', size = 18, className = '' }) {
   const lowerName = String(name || '').trim().toLowerCase();
+  const ResolvedIcon = resolveIcon(name);
+
+  if (ResolvedIcon) {
+    return <ResolvedIcon size={size} className={className} aria-hidden="true" />;
+  }
 
   if (LOCAL_ICONS.includes(lowerName)) {
     return (
@@ -155,6 +96,5 @@ export default function Icon({ name = 'info', size = 18, className = '' }) {
     );
   }
 
-  const ResolvedIcon = resolveIcon(name);
-  return <ResolvedIcon size={size} className={className} aria-hidden="true" />;
+  return <LucideIcons.Info size={size} className={className} aria-hidden="true" />;
 }

@@ -145,7 +145,7 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
               className="rounded-md p-1.5 text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 md:hidden"
               aria-label="Toggle menu"
             >
-              <Icon name={isMobileMenuOpen ? "close" : "menu"} size={20} />
+              <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={20} />
             </button>
           ) : null}
         </div>
