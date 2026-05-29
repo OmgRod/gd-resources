@@ -34,6 +34,39 @@ function toPosixPath(value = '') {
   return value.replace(/\\/g, '/');
 }
 
+function ensureProtocol(value = '') {
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value)) return value;
+  return `https://${value}`;
+}
+
+function resolveSiteUrl(siteConfig) {
+  const explicit =
+    process.env.SITE_URL ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    siteConfig?.siteUrl;
+
+  if (explicit) {
+    return ensureProtocol(String(explicit).trim()).replace(/\/+$/, '');
+  }
+
+  const cnamePath = path.join(process.cwd(), 'CNAME');
+  if (fs.existsSync(cnamePath)) {
+    const customDomain = fs.readFileSync(cnamePath, 'utf8').trim();
+    if (customDomain) {
+      return ensureProtocol(customDomain).replace(/\/+$/, '');
+    }
+  }
+
+  const repository = process.env.GITHUB_REPOSITORY || '';
+  const [owner, repo] = repository.split('/');
+  if (owner && repo) {
+    return `https://${owner}.github.io/${repo.replace(/^\/+|\/+$/g, '')}`;
+  }
+
+  return 'https://example.com';
+}
+
 function trimSlashes(value = '') {
   return value.replace(/^\/+|\/+$/g, '');
 }
@@ -212,20 +245,36 @@ export default function WikiPage({
   editPage,
   pageNavigation,
   subdirectoryGuides,
+  siteUrl,
 }) {
   const titleSuffix = siteConfig?.titleSuffix || siteConfig?.siteName || 'GD Resources';
   const fallbackDescription = siteConfig?.siteDescription || '';
   const faviconPath = normalizeAssetPath(siteConfig?.faviconPath || '/favicon.ico');
   const Template = resolveTemplate(template);
+  const canonicalUrl = siteUrl ? `${siteUrl}${currentPath === '/' ? '' : currentPath}/` : null;
+
+  const pageTitle = title ? `${title} | ${titleSuffix}` : titleSuffix;
+  const pageDesc = description || fallbackDescription;
+  const ogImage = siteUrl ? `${siteUrl}/banner.png` : '/banner.png';
 
   return (
     <>
       <Head>
-        <title>{title ? `${title} | ${titleSuffix}` : titleSuffix}</title>
-        {description || fallbackDescription ? (
-          <meta name="description" content={description || fallbackDescription} />
-        ) : null}
+        <title>{pageTitle}</title>
+        {pageDesc ? <meta name="description" content={pageDesc} /> : null}
         <link rel="icon" href={faviconPath} />
+        {canonicalUrl ? <link rel="canonical" href={canonicalUrl} /> : null}
+
+        <meta property="og:title" content={pageTitle} />
+        {pageDesc ? <meta property="og:description" content={pageDesc} /> : null}
+        <meta property="og:type" content="website" />
+        {canonicalUrl ? <meta property="og:url" content={canonicalUrl} /> : null}
+        <meta property="og:image" content={ogImage} />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        {pageDesc ? <meta name="twitter:description" content={pageDesc} /> : null}
+        <meta name="twitter:image" content={ogImage} />
       </Head>
       <WikiLayout
         currentPath={currentPath}
@@ -440,6 +489,7 @@ export async function getStaticProps({ params }) {
       footerConfig: getFooterConfig(relativePath),
       searchDocuments: getPageMetaIndex(),
       siteConfig,
+      siteUrl: resolveSiteUrl(siteConfig),
       template: templateKey,
       templateConfig: mergeTemplateConfig(
         templateKey,
