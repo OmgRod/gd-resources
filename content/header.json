@@ -2,10 +2,25 @@
   "links": [
     { "title": "Home", "path": "/", "icon": "Home" },
     { "title": "Official Guides", "path": "/guides", "icon": "Book" },
-    { "title": "Contributing", "path": "/contributing", "icon": "Wrench" },
-    { "title": "Credits", "path": "/credits", "icon": "Sparkles" }
+    {
+      "title": "Contributing",
+      "icon": "Wrench",
+      "items": [
+        { "title": "Guidelines", "path": "/contributing", "icon": "Book" },
+        { "title": "Credits", "path": "/credits", "icon": "Sparkles" }
+      ]
+    },
+    {
+      "title": "Support",
+      "icon": "HeartHandshake",
+      "items": [
+        { "title": "Issues", "path": "https://github.com/OmgRod/gd-resources/issues", "icon": "BadgeAlert" },
+        { "title": "Discussions", "path": "https://github.com/OmgRod/gd-resources/discussions", "icon": "MessagesSquare" },
+        { "title": "Discord", "path": "https://discord.gg/vK3DuqJwyW", "icon": "SiDiscord" }
+      ]
+    }
   ],
   "rightLinks": [
-    { "title": "GitHub", "path": "https://github.com/OmgRod/gd-resources", "icon": "SiGitHub" }
+    { "title": "GitHub", "path": "https://github.com/OmgRod/gd-resources", "icon": "Github" }
   ]
 }

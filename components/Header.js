@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import DarkModeToggle from './DarkModeToggle';
 import SearchBar from './SearchBar';
@@ -11,6 +11,18 @@ function isExternal(path = '') {
 
 export default function Header({ headerConfig, searchDocuments, siteConfig }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [expandedMobileMenus, setExpandedMobileMenus] = useState({});
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.miniwiki-dropdown-container')) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
   const links = headerConfig?.links || [];
   const rightLinks = headerConfig?.rightLinks || [];
   const siteName = siteConfig?.siteName || 'GD Resources';
@@ -63,8 +75,64 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
           </Link>
 
           <div className="ml-auto hidden min-w-0 flex-1 md:block">
-            <div className="flex items-center gap-2 overflow-x-auto whitespace-nowrap pb-1 [scrollbar-width:thin]">
+            <div className="flex items-center gap-2 whitespace-nowrap">
               {links.map((link) => {
+                if (link.items && Array.isArray(link.items)) {
+                  const isOpen = activeDropdown === link.title;
+                  return (
+                    <div key={link.title} className="relative inline-block miniwiki-dropdown-container shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setActiveDropdown(isOpen ? null : link.title)}
+                        className={`inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 ${
+                          isOpen ? 'bg-slate-100 dark:bg-slate-800' : ''
+                        }`}
+                        aria-expanded={isOpen}
+                      >
+                        {link.icon ? <Icon name={link.icon} size={16} /> : null}
+                        <span>{link.title}</span>
+                        <Icon
+                          name="ChevronDown"
+                          size={12}
+                          className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+
+                      {isOpen && (
+                        <div className="absolute left-0 mt-1.5 z-30 min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-1 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 flex flex-col gap-0.5">
+                          {link.items.map((subLink) => {
+                            if (isExternal(subLink.path)) {
+                              return (
+                                <a
+                                  key={`${subLink.title}-${subLink.path}`}
+                                  href={subLink.path}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                >
+                                  {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
+                                  <span>{subLink.title}</span>
+                                </a>
+                              );
+                            }
+                            return (
+                              <Link
+                                key={`${subLink.title}-${subLink.path}`}
+                                href={subLink.path}
+                                className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
+                                <span>{subLink.title}</span>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
                 if (isExternal(link.path)) {
                   return (
                     <a
@@ -152,9 +220,65 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
       )}
 
       {isMobileMenuOpen && links.length > 0 ? (
-        <div className="border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 md:hidden">
+        <div className="border-t border-slate-200 bg-white/95 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 md:hidden max-h-[calc(100vh-4rem)] overflow-y-auto">
           <nav className="flex flex-col gap-1.5">
             {links.map((link) => {
+              if (link.items && Array.isArray(link.items)) {
+                const isExpanded = expandedMobileMenus[link.title] || false;
+                return (
+                  <div key={`mobile-${link.title}`} className="flex flex-col gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedMobileMenus({ ...expandedMobileMenus, [link.title]: !isExpanded })}
+                      className="flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 w-full text-left"
+                    >
+                      <span className="flex items-center gap-2">
+                        {link.icon ? <Icon name={link.icon} size={18} /> : null}
+                        <span>{link.title}</span>
+                      </span>
+                      <Icon
+                        name="ChevronDown"
+                        size={16}
+                        className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                    {isExpanded && (
+                      <div className="flex flex-col gap-1 pl-4 border-l border-slate-200/50 dark:border-slate-800/50 ml-5 mt-1">
+                        {link.items.map((subLink) => {
+                          if (isExternal(subLink.path)) {
+                            return (
+                              <a
+                                key={`mobile-sub-${subLink.title}-${subLink.path}`}
+                                href={subLink.path}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {subLink.icon ? <Icon name={subLink.icon} size={18} /> : null}
+                                <span>{subLink.title}</span>
+                              </a>
+                            );
+                          }
+
+                          return (
+                            <Link
+                              key={`mobile-sub-${subLink.title}-${subLink.path}`}
+                              href={subLink.path}
+                              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {subLink.icon ? <Icon name={subLink.icon} size={18} /> : null}
+                              <span>{subLink.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               if (isExternal(link.path)) {
                 return (
                   <a
