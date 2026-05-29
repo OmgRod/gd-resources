@@ -17,7 +17,13 @@ function getInitialTheme() {
 }
 
 export default function DarkModeToggle() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') {
+      return 'light';
+    }
+
+    return getInitialTheme();
+  });
 
   useEffect(() => {
     const initial = getInitialTheme();
