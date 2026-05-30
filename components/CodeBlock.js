@@ -103,7 +103,7 @@ export default function CodeBlock({ children, className = '' }) {
         <button
           type="button"
           onClick={handleCopy}
-          className={`rounded border px-2.5 py-1 text-[11px] font-medium tracking-normal transition ${
+          className={`rounded border px-2.5 py-1 text-[11px] font-medium tracking-normal cursor-pointer transition ${
             isDark
               ? 'border-slate-600 text-slate-200 hover:bg-slate-700'
               : 'border-slate-300 text-slate-700 hover:bg-slate-200'

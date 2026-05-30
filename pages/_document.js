@@ -12,7 +12,7 @@ const setInitialThemeScript = `(function () {
       document.documentElement.style.setProperty('--theme-transition-duration', '300ms');
     });
   } catch (e) {
-    // Ignore if storage or matchMedia are unavailable.
+    // Ignore
   }
 })();`;
 

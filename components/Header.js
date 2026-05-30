@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import DarkModeToggle from './DarkModeToggle';
 import SearchBar from './SearchBar';
@@ -12,17 +13,44 @@ function isExternal(path = '') {
 export default function Header({ headerConfig, searchDocuments, siteConfig }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [dropdownRect, setDropdownRect] = useState(null);
   const [expandedMobileMenus, setExpandedMobileMenus] = useState({});
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.miniwiki-dropdown-container')) {
+      if (!event.target.closest('.miniwiki-dropdown-trigger')) {
         setActiveDropdown(null);
+        setDropdownRect(null);
       }
     };
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  // Close dropdown on scroll (rect would be stale)
+  useEffect(() => {
+    const handleScroll = () => {
+      setActiveDropdown(null);
+      setDropdownRect(null);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleDropdownToggle = useCallback((e, title) => {
+    if (activeDropdown === title) {
+      setActiveDropdown(null);
+      setDropdownRect(null);
+    } else {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setActiveDropdown(title);
+      setDropdownRect(rect);
+    }
+  }, [activeDropdown]);
+
   const links = headerConfig?.links || [];
   const rightLinks = headerConfig?.rightLinks || [];
   const siteName = siteConfig?.siteName || 'GD Resources';
@@ -48,8 +76,50 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
   const maxWidthClass = siteConfig?.layout?.maxWidthClass || 'max-w-7xl';
   const headerVariant = headerConfig?.variant || null;
 
+  // Active dropdown panel rendered via portal so it escapes overflow clipping
+  const activeLink = links.find((l) => l.title === activeDropdown);
+  const dropdownPortal =
+    mounted && activeLink && dropdownRect
+      ? createPortal(
+          <div
+            className="fixed z-[202] min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-1 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 flex flex-col gap-0.5"
+            style={{ top: dropdownRect.bottom + 6, left: dropdownRect.left }}
+          >
+            {activeLink.items.map((subLink) => {
+              if (isExternal(subLink.path)) {
+                return (
+                  <a
+                    key={`${subLink.title}-${subLink.path}`}
+                    href={subLink.path}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                  >
+                    {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
+                    <span>{subLink.title}</span>
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  key={`${subLink.title}-${subLink.path}`}
+                  href={subLink.path}
+                  className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                  onClick={() => { setActiveDropdown(null); setDropdownRect(null); }}
+                >
+                  {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
+                  <span>{subLink.title}</span>
+                </Link>
+              );
+            })}
+          </div>,
+          document.body
+        )
+      : null;
+
   return (
-    <header className="miniwiki-header sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+    // z-[203] keeps the header above the search overlay (z-[200]) and its modal (z-[201])
+    <header className="miniwiki-header sticky top-0 z-[203] border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       {headerVariant === 'logo-only' ? (
         <div className={`miniwiki-header-inner mx-auto ${maxWidthClass} flex items-center justify-center px-4 py-6`}>
           <Link
@@ -74,62 +144,30 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
             {!showLogo && !showText ? <span>{siteName}</span> : null}
           </Link>
 
+          {/* Desktop nav links — scrollable horizontally, dropdowns escape via portal */}
           <div className="ml-auto hidden min-w-0 flex-1 md:block">
-            <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="flex items-center gap-2 whitespace-nowrap overflow-x-auto scrollbar-simple pb-1">
               {links.map((link) => {
                 if (link.items && Array.isArray(link.items)) {
                   const isOpen = activeDropdown === link.title;
                   return (
-                    <div key={link.title} className="relative inline-block miniwiki-dropdown-container shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => setActiveDropdown(isOpen ? null : link.title)}
-                        className={`inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 ${
-                          isOpen ? 'bg-slate-100 dark:bg-slate-800' : ''
-                        }`}
-                        aria-expanded={isOpen}
-                      >
-                        {link.icon ? <Icon name={link.icon} size={16} /> : null}
-                        <span>{link.title}</span>
-                        <Icon
-                          name="ChevronDown"
-                          size={12}
-                          className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                        />
-                      </button>
-
-                      {isOpen && (
-                        <div className="absolute left-0 mt-1.5 z-30 min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-1 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 flex flex-col gap-0.5">
-                          {link.items.map((subLink) => {
-                            if (isExternal(subLink.path)) {
-                              return (
-                                <a
-                                  key={`${subLink.title}-${subLink.path}`}
-                                  href={subLink.path}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                >
-                                  {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
-                                  <span>{subLink.title}</span>
-                                </a>
-                              );
-                            }
-                            return (
-                              <Link
-                                key={`${subLink.title}-${subLink.path}`}
-                                href={subLink.path}
-                                className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-                                onClick={() => setActiveDropdown(null)}
-                              >
-                                {subLink.icon ? <Icon name={subLink.icon} size={14} /> : null}
-                                <span>{subLink.title}</span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
+                    <button
+                      key={link.title}
+                      type="button"
+                      onClick={(e) => handleDropdownToggle(e, link.title)}
+                      className={`miniwiki-dropdown-trigger inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 ${
+                        isOpen ? 'bg-slate-100 dark:bg-slate-800' : ''
+                      }`}
+                      aria-expanded={isOpen}
+                    >
+                      {link.icon ? <Icon name={link.icon} size={16} /> : null}
+                      <span>{link.title}</span>
+                      <Icon
+                        name="ChevronDown"
+                        size={12}
+                        className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
                   );
                 }
 
@@ -210,7 +248,7 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="rounded-md p-1.5 text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 md:hidden"
+              className="rounded-md p-1.5 cursor-pointer text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 md:hidden"
               aria-label="Toggle menu"
             >
               <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={20} />
@@ -230,7 +268,7 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
                     <button
                       type="button"
                       onClick={() => setExpandedMobileMenus({ ...expandedMobileMenus, [link.title]: !isExpanded })}
-                      className="flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 w-full text-left"
+                      className="flex items-center cursor-pointer justify-between gap-2 rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 w-full text-left"
                     >
                       <span className="flex items-center gap-2">
                         {link.icon ? <Icon name={link.icon} size={18} /> : null}
@@ -310,6 +348,9 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
           </nav>
         </div>
       ) : null}
+
+      {/* Dropdown panels rendered into document.body — immune to overflow clipping */}
+      {dropdownPortal}
     </header>
   );
 }

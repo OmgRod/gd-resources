@@ -57,7 +57,6 @@ function Accordion({ items = [], children }) {
 }
 
 function AccordionItem() {
-  // This component is only a marker for MDX; rendering is handled by the parent Accordion.
   return null;
 }
 

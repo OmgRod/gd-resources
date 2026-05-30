@@ -22,7 +22,7 @@ export function TabPanels({ children }) {
             key={tab.props.title}
             type="button"
             onClick={() => setActiveIndex(index)}
-            className={`rounded-md px-3 py-1.5 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+            className={`rounded-md px-3 py-1.5 text-sm cursor-pointer transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
               index === activeIndex
                 ? 'bg-blue-600 text-white'
                 : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800'

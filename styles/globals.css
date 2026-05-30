@@ -154,3 +154,18 @@ a:not(.miniwiki-button):hover code {
 [data-wiki-preset='portal'] .miniwiki-callout {
   @apply border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/80;
 }
+
+.scrollbar-simple::-webkit-scrollbar {
+  height: 4px;
+}
+.scrollbar-simple::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-simple::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+.dark .scrollbar-simple::-webkit-scrollbar-thumb {
+  background-color: #475569;
+}
+

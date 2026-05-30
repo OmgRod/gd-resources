@@ -14,7 +14,6 @@ function isIconComponent(value) {
   return (typeof value === 'function' || typeof value === 'object') && value !== null;
 }
 
-// Custom high-quality brand SVGs for popular brands that may be missing in older Lucide versions
 const CUSTOM_BRAND_ICONS = {
   discord: ({ size = 18, ...props }) => (
     <svg
@@ -112,7 +111,6 @@ export default function Icon({ name = 'info', size = 18, className = '' }) {
   const lowerName = String(name || '').trim().toLowerCase();
   const cleanBrandName = lowerName.replace(/^si[-_]?/i, '');
 
-  // Check custom brand inline SVGs first (e.g., Discord)
   if (CUSTOM_BRAND_ICONS[cleanBrandName]) {
     const CustomBrandIcon = CUSTOM_BRAND_ICONS[cleanBrandName];
     return <CustomBrandIcon size={size} className={className} aria-hidden="true" />;

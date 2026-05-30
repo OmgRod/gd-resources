@@ -101,7 +101,7 @@ function SidebarGroup({ item, currentPath, depth }) {
       <button
         type="button"
         onClick={() => collapsible && setIsOpen((value) => !value)}
-        className={`group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left ${
+        className={`group flex w-full cursor-pointer items-center justify-between rounded-md px-2 py-1.5 text-left ${
           depth === 0
             ? 'text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800'
             : 'text-[13px] font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
@@ -146,7 +146,7 @@ function SidebarSection({ section, currentPath }) {
       <button
         type="button"
         onClick={() => collapsible && setIsOpen((value) => !value)}
-        className="mb-2 flex w-full items-center justify-between rounded-md px-2 py-1 text-left text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+        className="mb-2 flex w-full cursor-pointer items-center justify-between rounded-md px-2 py-1 text-left text-sm font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
       >
         <span>{section.title}</span>
         {collapsible ? (
