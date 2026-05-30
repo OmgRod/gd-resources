@@ -82,7 +82,7 @@ export default function Header({ headerConfig, searchDocuments, siteConfig }) {
     mounted && activeLink && dropdownRect
       ? createPortal(
           <div
-            className="fixed z-[202] min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-1 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 flex flex-col gap-0.5"
+            className="fixed z-[204] min-w-[200px] rounded-lg border border-slate-200 bg-white/95 p-1 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-950/95 flex flex-col gap-0.5"
             style={{ top: dropdownRect.bottom + 6, left: dropdownRect.left }}
           >
             {activeLink.items.map((subLink) => {
