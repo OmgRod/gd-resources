@@ -26,7 +26,7 @@
     "@icons-pack/react-simple-icons": "^13.13.0",
     "flexsearch": "^0.8.212",
     "gray-matter": "^4.0.3",
-    "katex": "^0.17.0",
+    "katex": "^0.18.1",
     "lucide-react": "^1.24.0",
     "next": "^16.2.10",
     "next-mdx-remote": "^6.0.0",
