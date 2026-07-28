@@ -30,7 +30,7 @@
     "lucide-react": "^1.27.0",
     "next": "^16.2.11",
     "next-mdx-remote": "^6.0.0",
-    "react": "^19.2.6",
+    "react": "^19.2.8",
     "react-dom": "^19.2.7",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
