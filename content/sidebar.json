@@ -53,6 +53,15 @@
       ]
     },
     {
+      "title": "Lua Trigger",
+      "collapsible": true,
+      "items": [
+        { "title": "Table of Contents", "path": "/lua/index" },
+        { "title": "Official Guides", "path": "/lua/guides/index" },
+        { "title": "Setup", "path": "/lua/guides/setup" }
+      ]
+    },
+    {
       "title": "Miscellaneous",
       "collapsible": true,
       "items": [
