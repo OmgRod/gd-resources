@@ -27,7 +27,7 @@ export default function DocsPreset({
           currentPath={currentPath}
           sidebarWidthClass={sidebarWidthClass}
         />
-        <main className="w-full p-6 md:p-8">{children}</main>
+        <main className="w-full min-w-0 p-6 md:p-8">{children}</main>
       </div>
       <Footer siteConfig={siteConfig} footerConfig={footerConfig} />
     </div>

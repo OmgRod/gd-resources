@@ -28,7 +28,7 @@ export default function PortalPreset({
               currentPath={currentPath}
               sidebarWidthClass={sidebarWidthClass}
             />
-            <main className="w-full p-6 md:p-10">{children}</main>
+            <main className="w-full min-w-0 p-6 md:p-10">{children}</main>
           </div>
         </div>
       </div>

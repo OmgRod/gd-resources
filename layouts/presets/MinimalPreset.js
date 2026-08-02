@@ -26,7 +26,7 @@ export default function MinimalPreset({
           currentPath={currentPath}
           sidebarWidthClass={sidebarWidthClass}
         />
-        <main className="w-full">{children}</main>
+        <main className="w-full min-w-0">{children}</main>
       </div>
       <Footer siteConfig={siteConfig} footerConfig={footerConfig} />
     </div>

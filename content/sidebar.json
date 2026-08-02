@@ -29,7 +29,8 @@
         ]},
         { "title": "Fangame Guide", "collapsible": true, "items": [
           { "title": "1: Custom Levels", "path": "/geode/guides/fangame/chap1" },
-          { "title": "2: Adding Song Credits", "path": "/geode/guides/fangame/chap2" }
+          { "title": "2: Adding Song Credits", "path": "/geode/guides/fangame/chap2" },
+          { "title": "3: Custom Achievements", "path": "/geode/guides/fangame/chap3" }
         ]},
         { "title": "Setting up Geode", "path": "/geode/guides/setup" },
         { "title": "Markdown Formatting in Geode", "path": "/geode/guides/markdown" }

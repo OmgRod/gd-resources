@@ -91,7 +91,7 @@ export default function CodeBlock({ children, className = '' }) {
   }
 
   return (
-    <div className={`my-6 overflow-hidden rounded-xl border ${isDark ? 'border-slate-700' : 'border-slate-300'}`}>
+    <div className={`my-6 w-full min-w-0 max-w-full overflow-hidden rounded-xl border ${isDark ? 'border-slate-700' : 'border-slate-300'}`}>
       <div
         className={`flex items-center justify-between border-b px-4 py-2 text-xs uppercase tracking-wide ${
           isDark
@@ -114,18 +114,28 @@ export default function CodeBlock({ children, className = '' }) {
       </div>
       <Highlight code={code} language={language} theme={isDark ? themes.vsDark : themes.vsLight}>
         {({ className: highlightedClassName, style, tokens, getLineProps, getTokenProps }) => (
-          <div className="p-3" style={{ backgroundColor: style.backgroundColor }}>
+          <div className="p-3 max-h-[35rem] overflow-auto w-full" style={{ backgroundColor: style.backgroundColor }}>
             <pre
-              className={`${highlightedClassName} !m-0 overflow-x-auto text-sm leading-7`}
+              className={`${highlightedClassName} !m-0 w-full min-w-fit text-sm leading-7`}
               style={{ ...style, backgroundColor: 'transparent', margin: 0, padding: 0 }}
             >
-              {tokens.map((line, index) => (
-                <div key={index} {...getLineProps({ line })}>
-                  {line.map((token, tokenKey) => (
-                    <span key={tokenKey} {...getTokenProps({ token })} />
-                  ))}
-                </div>
-              ))}
+              <div className="table min-w-full">
+                {tokens.map((line, index) => {
+                  const lineProps = getLineProps({ line });
+                  return (
+                    <div key={index} {...lineProps} className={`${lineProps.className || ''} table-row`}>
+                      <span className="table-cell w-10 shrink-0 select-none pr-4 text-right opacity-50">
+                        {index + 1}
+                      </span>
+                      <span className="table-cell whitespace-pre">
+                        {line.map((token, tokenKey) => (
+                          <span key={tokenKey} {...getTokenProps({ token })} />
+                        ))}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </pre>
           </div>
         )}
