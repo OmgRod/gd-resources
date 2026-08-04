@@ -1,0 +1,137 @@
+---
+title: Scaling Objects
+description: Learn how to scale objects in Lua Trigger
+author: OmgRod
+order: 4
+editPage: true
+navigation: true
+---
+
+# Scaling Objects
+
+Lua Trigger lets you interact with objects through group IDs. One of the ways you can interact with objects is by scaling them. An example of how to scale objects is below:
+
+```lua
+while true do
+    Object.scale(
+        5, -- Target group
+        1, -- Center group
+        2, -- Scale X
+        2, -- Scale Y
+        1, -- Duration
+        0, -- Easing Type
+        2, -- Easing Rate
+        {  -- Options
+            relativeScale = true
+        }
+    )
+end
+```
+
+The code above scales group 5 to 2x size with center group ID 1 over 1 second.
+
+<Table>
+    <Caption>`Object.scale()` parameters</Caption>
+    <THead>
+        <TR>
+            <TH>Parameter</TH>
+            <TH>Type</TH>
+            <TH>Default</TH>
+            <TH>Description</TH>
+        </TR>
+    </THead>
+    <TBody>
+        <TR>
+            <TD>`targetGroup`</TD>
+            <TD>`integer`</TD>
+            <TD>-</TD>
+            <TD>Group to scale.</TD>
+        </TR>
+        <TR>
+            <TD>`centerGroup`</TD>
+            <TD>`integer`</TD>
+            <TD>-</TD>
+            <TD>Scaling center.</TD>
+        </TR>
+        <TR>
+            <TD>`scaleX`</TD>
+            <TD>`number`</TD>
+            <TD>-</TD>
+            <TD>Horizontal scale.</TD>
+        </TR>
+        <TR>
+            <TD>`scaleY`</TD>
+            <TD>`number`</TD>
+            <TD>`scaleX`</TD>
+            <TD>Vertical scale.</TD>
+        </TR>
+        <TR>
+            <TD>`duration`</TD>
+            <TD>`number`</TD>
+            <TD>0</TD>
+            <TD>Animation duration.</TD>
+        </TR>
+        <TR>
+            <TD>`easingType`</TD>
+            <TD>`integer`</TD>
+            <TD>0</TD>
+            <TD>Easing type (look at <Link href="/lua/guides/misc#easing-type">easing type docs</Link>).</TD>
+        </TR>
+        <TR>
+            <TD>`easingRate`</TD>
+            <TD>`number`</TD>
+            <TD>2.0</TD>
+            <TD>Easing rate (look at <Link href="/lua/guides/misc#easing-rate">easing rate docs</Link>).</TD>
+        </TR>
+        <TR>
+            <TD>`options`</TD>
+            <TD>`table`</TD>
+            <TD>`{}`</TD>
+            <TD>Extra scaling options. Look below for more properties.</TD>
+        </TR>
+    </TBody>
+</Table>
+
+<Table>
+    <Caption>`options` parameters</Caption>
+    <THead>
+        <TR>
+            <TH>Parameter</TH>
+            <TH>Type</TH>
+            <TH>Default</TH>
+            <TH>Description</TH>
+        </TR>
+    </THead>
+    <TBody>
+        <TR>
+            <TD>`divByX`</TD>
+            <TD>`boolean`</TD>
+            <TD>`false`</TD>
+            <TD>Divide scaling by the X scale.</TD>
+        </TR>
+        <TR>
+            <TD>`divByY`</TD>
+            <TD>`boolean`</TD>
+            <TD>`false`</TD>
+            <TD>Divide scaling by the Y scale.</TD>
+        </TR>
+        <TR>
+            <TD>`onlyMove`</TD>
+            <TD>`boolean`</TD>
+            <TD>`false`</TD>
+            <TD>Only move objects instead of resizing them.</TD>
+        </TR>
+        <TR>
+            <TD>`relativeScale`</TD>
+            <TD>`boolean`</TD>
+            <TD>`false`</TD>
+            <TD>Apply the scale relative to the current scale.</TD>
+        </TR>
+        <TR>
+            <TD>`relativeRotation`</TD>
+            <TD>`boolean`</TD>
+            <TD>`false`</TD>
+            <TD>Respect each object's current rotation while scaling.</TD>
+        </TR>
+    </TBody>
+</Table>

@@ -58,7 +58,11 @@
       "items": [
         { "title": "Table of Contents", "path": "/lua/index" },
         { "title": "Official Guides", "path": "/lua/guides/index" },
-        { "title": "Setup", "path": "/lua/guides/setup" }
+        { "title": "Setup", "path": "/lua/guides/setup" },
+        { "title": "Moving Objects", "path": "/lua/guides/moving" },
+        { "title": "Rotating Objects", "path": "/lua/guides/rotating" },
+        { "title": "Scaling Objects", "path": "/lua/guides/scaling" },
+        { "title": "Miscellaneous", "path": "/lua/guides/misc" }
       ]
     },
     {

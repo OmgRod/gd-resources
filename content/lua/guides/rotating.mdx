@@ -1,0 +1,85 @@
+---
+title: Rotating Objects
+description: Learn how to rotate objects in Lua Trigger
+author: OmgRod
+order: 3
+editPage: true
+navigation: true
+---
+
+# Rotating Objects
+
+Lua Trigger lets you interact with objects through group IDs. One of the ways you can interact with objects is by rotating them. An example of how to rotate objects is below:
+
+```lua
+while true do
+    Object.rotate(
+        2,  -- Target group ID
+        1,  -- Center group ID
+        90, -- Degrees
+        0,  -- Times to rotate 360 degrees
+        1,  -- Duration
+        0,  -- Easing type
+        2   -- Easing rate
+    )
+    wait(1) -- Waits 1 second (look at wait docs)
+end
+```
+
+The code above rotates all the objects in group ID 1 90 degrees over 1 second.
+
+<Table>
+    <Caption>`Object.rotate()` parameters</Caption>
+    <THead>
+        <TR>
+            <TH>Parameter</TH>
+            <TH>Type</TH>
+            <TH>Default</TH>
+            <TH>Description</TH>
+        </TR>
+    </THead>
+    <TBody>
+        <TR>
+            <TD>`targetGroup`</TD>
+            <TD>`integer`</TD>
+            <TD>-</TD>
+            <TD>Group to scale.</TD>
+        </TR>
+        <TR>
+            <TD>`centerGroup`</TD>
+            <TD>`integer`</TD>
+            <TD>-</TD>
+            <TD>Pivot group.</TD>
+        </TR>
+        <TR>
+            <TD>`degrees`</TD>
+            <TD>`integer`</TD>
+            <TD>-</TD>
+            <TD>Rotation angle.</TD>
+        </TR>
+        <TR>
+            <TD>`times360`</TD>
+            <TD>`integer`</TD>
+            <TD>0</TD>
+            <TD>Extra full 360° rotations.</TD>
+        </TR>
+        <TR>
+            <TD>`duration`</TD>
+            <TD>number</TD>
+            <TD>0</TD>
+            <TD>Rotation duration.</TD>
+        </TR>
+        <TR>
+            <TD>`easingType`</TD>
+            <TD>number</TD>
+            <TD>0</TD>
+            <TD>Easing type (look at <Link href="/lua/guides/misc#easing-type">easing type docs</Link>).</TD>
+        </TR>
+        <TR>
+            <TD>`easingRate`</TD>
+            <TD>number</TD>
+            <TD>2</TD>
+            <TD>Easing rate (look at <Link href="/lua/guides/misc#easing-rate">easing rate docs</Link>).</TD>
+        </TR>
+    </TBody>
+</Table>

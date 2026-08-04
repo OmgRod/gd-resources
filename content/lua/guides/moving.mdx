@@ -1,0 +1,76 @@
+---
+title: Moving Objects
+description: Learn how to move objects in Lua Trigger
+author: OmgRod
+order: 2
+editPage: true
+navigation: true
+---
+
+# Moving Objects
+
+Lua Trigger lets you interact with objects through group IDs. One of the ways you can interact with objects is by moving them. An example of how to move objects is below:
+
+```lua
+while true do
+    Object.move(
+        1, -- All objects in group ID 1
+        30, -- Moves object 30 units (1 block) to the right
+        30, -- Moves object 30 units (1 block) up
+        1 -- Over 1 second
+    )
+    wait(1) -- Waits 1 second (look at wait docs)
+end
+```
+
+The code above moves all the objects in group ID 1 30 units up and 30 units right over the duration of 1 second.
+
+<Table>
+    <Caption>`Object.move()` parameters</Caption>
+    <THead>
+        <TR>
+            <TH>Parameter</TH>
+            <TH>Type</TH>
+            <TH>Default</TH>
+            <TH>Description</TH>
+        </TR>
+    </THead>
+    <TBody>
+        <TR>
+            <TD>Group ID</TD>
+            <TD>number</TD>
+            <TD>-</TD>
+            <TD>The Target Group ID of the objects you want to move.</TD>
+        </TR>
+        <TR>
+            <TD>Move X</TD>
+            <TD>number</TD>
+            <TD>-</TD>
+            <TD>Horizontal distance to move in units (30 units = 1 block). Positive moves right, negative moves left.</TD>
+        </TR>
+        <TR>
+            <TD>Move Y</TD>
+            <TD>number</TD>
+            <TD>-</TD>
+            <TD>Vertical distance to move in units (30 units = 1 block). Positive moves up, negative moves down.</TD>
+        </TR>
+        <TR>
+            <TD>Duration</TD>
+            <TD>number</TD>
+            <TD>0</TD>
+            <TD>The time in seconds over which the movement takes place.</TD>
+        </TR>
+        <TR>
+            <TD>`easingType`</TD>
+            <TD>number</TD>
+            <TD>0</TD>
+            <TD>Easing type (look at <Link href="/lua/guides/misc#easing-type">easing type docs</Link>).</TD>
+        </TR>
+        <TR>
+            <TD>`easingRate`</TD>
+            <TD>number</TD>
+            <TD>2</TD>
+            <TD>Easing rate (look at <Link href="/lua/guides/misc#easing-rate">easing rate docs</Link>).</TD>
+        </TR>
+    </TBody>
+</Table>

@@ -449,6 +449,7 @@ export async function getStaticProps({ params }) {
       reversing: countDirectoryPagesRecursively('reversing/guides', { exclude: ['index'] }),
       geometrydash: countDirectoryPagesRecursively('geometrydash/guides', { exclude: ['index'] }),
       levels: countDirectoryPagesRecursively('levels/guides', { exclude: ['index'] }),
+      lua: countDirectoryPagesRecursively('lua/guides', { exclude: ['index'] }),
       servers: countDirectoryPagesRecursively('servers/guides', { exclude: ['index'] }),
       savefiles: countDirectoryPagesRecursively('savefiles/guides', { exclude: ['index'] }),
       tradmodding: countDirectoryPagesRecursively('tradmodding/guides', { exclude: ['index'] }),
