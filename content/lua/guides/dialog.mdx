@@ -1,0 +1,141 @@
+---
+title: Adding Dialog
+description: Learn how to show dialog in Lua
+author: OmgRod
+order: 7
+editPage: true
+navigation: true
+---
+
+# Adding Dialog
+
+The `Dialog` API allows you to trigger Geometry Dash's native cutscene dialogue system directly from your Lua scripts. When a dialogue opens, player movement is automatically paused until the dialogue sequence finishes.
+
+## Basic Usage
+
+To present a dialogue sequence, pass an array of speech frames to `Dialog.show()`.
+
+```lua
+-- Example: Shop entry dialogue sequence
+Dialog.show({
+    {
+        speaker = "Scratch",
+        text = "Hello player!",
+        avatar = 8,
+        scale = 1.0,
+        unskippable = false
+    },
+    {
+        speaker = "Scratch",
+        text = "Goodbye player!",
+        avatar = 9
+    }
+}, {
+    bgType = 2,
+    animateSide = true
+})
+```
+
+## API Reference
+
+### `Dialog.show(dialogList, [options])`
+
+Displays a sequence of interactive dialogue boxes.
+
+#### Arguments
+
+1. **`dialogList`** (`table`): An array table where each element is a table containing the setup for an individual dialogue box.
+2. **`options`** (`table`, optional): A configuration table controlling overall dialogue presentation.
+
+### Dialogue Entry Options
+
+Each dialogue object in the `dialogList` array supports the following properties:
+
+<Table>
+  <Caption>Dialogue Entry Options</Caption>
+  <THead>
+    <TR>
+      <TH>Parameter</TH>
+      <TH>Type</TH>
+      <TH>Default</TH>
+      <TH>Description</TH>
+    </TR>
+  </THead>
+  <TBody>
+    <TR>
+      <TD>`speaker`</TD>
+      <TD>`string`</TD>
+      <TD>`""`</TD>
+      <TD>The name displayed at the top of the dialogue box.</TD>
+    </TR>
+    <TR>
+      <TD>`text`</TD>
+      <TD>`string`</TD>
+      <TD>`""`</TD>
+      <TD>The text content to display. Supports GD dialogue tags (e.g., `<d030>`, `<cr>`).</TD>
+    </TR>
+    <TR>
+      <TD>`avatar`</TD>
+      <TD>`integer`</TD>
+      <TD>`1`</TD>
+      <TD>The character avatar/portrait frame ID to render.</TD>
+    </TR>
+    <TR>
+      <TD>`scale`</TD>
+      <TD>`number`</TD>
+      <TD>`1.0`</TD>
+      <TD>Text scale inside the dialogue box.</TD>
+    </TR>
+    <TR>
+      <TD>`unskippable`</TD>
+      <TD>`boolean`</TD>
+      <TD>`false`</TD>
+      <TD>If set to `true`, the player cannot tap/click to skip this line immediately.</TD>
+    </TR>
+    <TR>
+      <TD>`color`</TD>
+      <TD>`table`</TD>
+      <TD>`{255, 255, 255}`</TD>
+      <TD>An array containing RGB values `{R, G, B}` (0–255) to tint the main text.</TD>
+    </TR>
+  </TBody>
+</Table>
+
+### Global Presentation Options
+
+The optional second argument table controls how the dialogue UI layers into the scene:
+
+<Table>
+  <Caption>Global Presentation Options</Caption>
+  <THead>
+    <TR>
+      <TH>Parameter</TH>
+      <TH>Type</TH>
+      <TH>Default</TH>
+      <TH>Description</TH>
+    </TR>
+  </THead>
+  <TBody>
+    <TR>
+      <TD>`bgType`</TD>
+      <TD>`integer`</TD>
+      <TD>`2`</TD>
+      <TD>Background style for the dialogue layer (e.g., standard, darkened overlay).</TD>
+    </TR>
+    <TR>
+      <TD>`animateSide`</TD>
+      <TD>`boolean`</TD>
+      <TD>`true`</TD>
+      <TD>When `true`, slides the dialogue box in randomly from either side of the screen upon opening.</TD>
+    </TR>
+  </TBody>
+</Table>
+
+## Text Formatting Tags
+
+Geometry Dash uses built-in text tags within dialogue strings to trigger color shifts, speed adjustments, and sound effects:
+
+* **Text Speed:** `<d030>` changes text delay (e.g., `030` = 0.30s per letter).
+* **Color Tags:** `<cr>` (Red), `<cg>` (Green), `<cb>` (Blue), `<cy>` (Yellow), `<co>` (Orange), `<c#HEX>` (Custom Hex Color).
+* **Reset Color:** `</c>` resets text color back to default white.
+* **Sound Effects:** `<s100>` plays a specific GD sfx ID when that word appears. `</s>` stops/resets current text sound settings.

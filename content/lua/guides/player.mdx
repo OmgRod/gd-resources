@@ -1,0 +1,85 @@
+---
+title: Player Control
+description: Learn how to manage and manipulate players in Lua
+author: OmgRod
+order: 5
+editPage: true
+navigation: true
+---
+
+# Player Control
+
+The `Player` API allows you to directly interact with and control the player characters during gameplay.
+
+## API Reference
+
+### `Player.kill([playerType])`
+
+Destroys the specified player instance, triggering the death/respawn sequence for the current layer.
+
+#### Arguments
+
+1. **`playerType`** (`integer`, optional): An integer enum specifying which player character to destroy. Defaults to `1` (`Player.Player1`).
+
+### Player Enums
+
+The `Player` table includes pre-defined integer constants for targeting specific player instances in dual-player scenarios:
+
+<Table>
+  <Caption>Player Type Enums</Caption>
+  <THead>
+    <TR>
+      <TH>Key</TH>
+      <TH>Type</TH>
+      <TH>Value</TH>
+      <TH>Description</TH>
+    </TR>
+  </THead>
+  <TBody>
+    <TR>
+      <TD>`Player.Player1`</TD>
+      <TD>`integer`</TD>
+      <TD>`1`</TD>
+      <TD>Targets primary player (Player 1).</TD>
+    </TR>
+    <TR>
+      <TD>`Player.Player2`</TD>
+      <TD>`integer`</TD>
+      <TD>`2`</TD>
+      <TD>Targets secondary player (Player 2) in Dual Mode.</TD>
+    </TR>
+    <TR>
+      <TD>`Player.Both`</TD>
+      <TD>`integer`</TD>
+      <TD>`3`</TD>
+      <TD>Targets both players simultaneously.</TD>
+    </TR>
+  </TBody>
+</Table>
+
+## Basic Usage
+
+### Instant Death
+
+To immediately destroy Player 1 (the default action):
+
+```lua
+-- Kills Player 1
+Player.kill()
+
+-- Explicitly passing the enum
+Player.kill(Player.Player1)
+```
+
+### Dual Mode Targeting
+
+When working in Dual Mode, you can target specific players or destroy both at once:
+
+```lua
+-- Destroy only Player 2
+Player.kill(Player.Player2)
+
+-- Destroy both Player 1 and Player 2 simultaneously
+Player.kill(Player.Both)
+
+```

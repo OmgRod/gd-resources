@@ -62,6 +62,9 @@
         { "title": "Moving Objects", "path": "/lua/guides/moving" },
         { "title": "Rotating Objects", "path": "/lua/guides/rotating" },
         { "title": "Scaling Objects", "path": "/lua/guides/scaling" },
+        { "title": "Player Control", "path": "/lua/guides/player" },
+        { "title": "Displaying Popups", "path": "/lua/guides/popups" },
+        { "title": "Adding Dialog", "path": "/lua/guides/dialog" },
         { "title": "Miscellaneous", "path": "/lua/guides/misc" }
       ]
     },

@@ -1,0 +1,78 @@
+---
+title: Displaying Popups
+description: Learn how to trigger native in-game popups in Lua Trigger
+author: OmgRod
+order: 6
+editPage: true
+navigation: true
+---
+
+# Displaying Popups
+
+The `Popup` API allows you to display Geometry Dash's native alert dialogs (`FLAlertLayer`) directly from your Lua scripts. When a popup opens, player movement is automatically paused until the player interacts with one of the buttons or closes the dialog.
+
+## Basic Usage
+
+To present a simple alert box with a single button:
+
+```lua
+-- Simple informational alert
+Popup.show(
+    "Welcome!", -- Title
+    "Prepare yourself for the upcoming challenge.", -- Message content
+    "Let's Go!" -- Button 1 text
+)
+
+```
+
+You can also create interactive popups with two buttons and handle user responses via a callback function:
+
+```lua
+-- Interactive decision popup
+Popup.show(
+    "Choose Your Path",
+    "Do you want to enter the secret area?",
+    "Yes", -- Button 1 text
+    "No", -- Button 2 text
+    function(popup, secondButton)
+        if secondButton then
+            print("Player clicked No!")
+        else
+            print("Player clicked Yes!")
+        end
+    end
+)
+
+```
+
+## API Reference
+
+### `Popup.show(title, content, [btn1], [btn2], [callback], [doShow], [cancelledByEscape])`
+
+Displays a native in-game popup alert box.
+
+## Handling Callbacks
+
+When providing a callback function to `Popup.show()`, your function receives two arguments:
+
+1. **`popup`**: A reference to the underlying popup layer object.
+2. **`secondButton`** (`boolean`): Returns `false` if the primary button (`btn1`) was clicked, and `true` if the secondary button (`btn2`) was clicked.
+
+```lua
+Popup.show(
+    "Warning",
+    "Would you like to reset your progress?",
+    "Keep Going",
+    "Reset",
+    function(popup, secondButton)
+        if secondButton then
+            -- Player chose "Reset" (btn2)
+            state.score = 0
+            print("Progress reset!")
+        else
+            -- Player chose "Keep Going" (btn1)
+            print("Continuing game...")
+        end
+    end
+)
+```
