@@ -23,7 +23,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@icons-pack/react-simple-icons": "^13.13.0",
+    "@icons-pack/react-simple-icons": "^13.15.1",
     "flexsearch": "^0.8.212",
     "gray-matter": "^4.0.3",
     "katex": "^0.18.1",
